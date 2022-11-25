@@ -3,6 +3,8 @@ const productForm = document.querySelector(".product-form");
 const nameInput = document.querySelector("#name");
 const priceInput = document.querySelector("#price");
 const mainContainer = document.querySelector(".main-container");
+const category = document.querySelector("select");
+const desciption = document.querySelector("#description");
 
 // after loading page
 addEventListener("DOMContentLoaded", async () => {
@@ -25,19 +27,20 @@ const displayProducts = (products) => {
   mainContainer.innerHTML = productsDOM;
 };
 
-submitBtn.addEventListener("click", async function () {
-  try {
-    // const resp = await axios.post("/products", {
-    //   name: nameInput.value,
-    //   price: Number(priceInput.value),
-    // });
-    console.log("click");
-  } catch (error) {
-    console.log("error click");
-  }
-});
-
-productForm.addEventListener("submit", function (e) {
+productForm.addEventListener("submit", async function (e) {
   e.preventDefault();
   console.log("submit form");
+
+  const resp = await axios.post("/api/products", {
+    name: nameInput.value,
+    description: desciption.value,
+    price: Number(priceInput.value),
+    category: category.value,
+  });
+  console.log(desciption.value);
+  console.log(nameInput.value);
+  console.log(typeof priceInput.value);
+  console.log(category.value);
+
+  // document.location.reload();
 });

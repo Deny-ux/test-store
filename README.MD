@@ -1,13 +1,12 @@
-# Routes
+Routes
 
-| Router | requires JWT | returns json | returns file | methods|
-| ----------------- | ------------ | ----------------------------- | ------------ ||
-| /api/register | - | jwt, msg | - |post|
-| /api/login | - | jwt, msg | - |post|
-| /api/products | - | returns records from products | - |get, post,|
-| /api/products/:id | - | return 1 record with id | - |get,delete,maybe patch|
-|/api/logout | + | msg |- | get|
-| | | | ||
+| path               | requires JWT | returns json        | returns file | method |
+| ------------------ | ------------ | ------------------- | ------------ | ------ |
+| /api/auth/register | -            | returns token, msg  | -            | post   |
+| /api/auth/login    | -            | returns token,msg   | -            | post   |
+| /api/products      | -            | returns array       | -            | get    |
+| /api/products      | -            | returns msg, object | -            | post   |
+| /api/products/:id  | -            | returns object, msg |              | get    |
 
 /api/products - post - creates new product (requires req.body)
 
@@ -17,8 +16,6 @@
 
 /api/products - can contain req.query (?)
 
-/api/products/:id - get - to display specific item
-/api/products/:id - patch - to update specific item
-/api/products/:id - delete - to buy specific item
+/api/products/:id - get - to display specific item /api/products/:id - patch - to update specific item /api/products/:id - delete - to buy specific item
 
 /api/logout - MB in future

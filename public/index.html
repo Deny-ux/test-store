@@ -15,21 +15,30 @@
 
     <!-- my styles -->
     <link rel="stylesheet" href="./styles/styles.css" />
-    <title>Document</title>
+    <title>The Coolest Store Ever</title>
   </head>
   <body>
     <main>
       <h2 class="header">MAIN PAGE</h2>
 
-      <h3>New Product</h3>
       <form class="product-form" action="api/products" method="POST">
+        <h3>New Product</h3>
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
           <input
             class="form-control"
             id="name"
             name="name"
-            placeholder="Enter name"
+            placeholder="Type name"
+            autocomplete="off"
+          />
+          <label for="description" class="form-label">Description</label>
+          <input
+            class="form-control"
+            id="description"
+            name="description"
+            placeholder="Type description"
+            autocomplete="off"
           />
         </div>
         <div class="mb-3">
@@ -43,8 +52,11 @@
           />
         </div>
         <div class="mb-3">
-          <label for="category" class="form-label">Category</label>
-          <input
+          <label for="category" style="display: block" class="form-label"
+            >Category</label
+          >
+
+          <!-- <input
             class="form-control"
             id="category"
             name="category"
@@ -59,7 +71,16 @@
               Electronics And Computers
             </option>
             <option value="Sports And Outdoors">Sports And Outdoors</option>
-          </datalist>
+          </datalist> -->
+
+          <select name="category" id="category">
+            <option value="Books">Books</option>
+            <option value="Toys">Toys</option>
+            <option value="Electronics And Computers">
+              Electronics And Computers
+            </option>
+            <option value="Sports And Outdoors">Sports And Outdoors</option>
+          </select>
         </div>
         <button type="submit" class="submit-btn btn btn-primary block">
           SUBMIT!
