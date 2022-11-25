@@ -1,0 +1,22 @@
+main {
+  min-width: 90vw;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+}
+
+.submit-btn {
+  text-align: center;
+}
+
+.main-container {
+  border-radius: 10px;
+}
+.product {
+  background: rgb(214, 214, 214);
+
+  margin: 20px;
+}

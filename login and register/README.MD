@@ -5,7 +5,7 @@
 | /api/register | - | jwt, msg | - |post|
 | /api/login | - | jwt, msg | - |post|
 | /api/products | - | returns records from products | - |get, post,|
-| /api/products/:id | - | return 1 record with id | - |get,delete,maybe patch|
+| /api/products/:id | + | return 1 record with id | - |get,delete,maybe patch|
 |/api/logout | + | msg |- | get|
 | | | | ||
 

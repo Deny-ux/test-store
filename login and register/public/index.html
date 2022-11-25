@@ -20,9 +20,7 @@
   <body>
     <main>
       <h2 class="header">MAIN PAGE</h2>
-
-      <h3>New Product</h3>
-      <form class="product-form" action="api/products" method="POST">
+      <form action="/products" method="POST">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
           <input
@@ -42,32 +40,15 @@
             placeholder="Enter price"
           />
         </div>
-        <div class="mb-3">
-          <label for="category" class="form-label">Category</label>
-          <input
-            class="form-control"
-            id="category"
-            name="category"
-            type="text"
-            placeholder="Enter category"
-            list="categoryList"
-          />
-          <datalist id="categoryList">
-            <option value="Books">Books</option>
-            <option value="Toys">Toys</option>
-            <option value="Electronics And Computers">
-              Electronics And Computers
-            </option>
-            <option value="Sports And Outdoors">Sports And Outdoors</option>
-          </datalist>
-        </div>
-        <button type="submit" class="submit-btn btn btn-primary block">
-          SUBMIT!
-        </button>
+        <button class="submit-btn btn btn-primary block">SUBMIT!</button>
       </form>
       <a href="./client.html">client</a>
-      <header class="header-products"><h2>List of products</h2></header>
-      <section class="main-container"></section>
+      <section class="main-container">
+        <!-- <article class="product">
+          <h2>name</h2>
+          <p>price</p>
+        </article> -->
+      </section>
     </main>
 
     <!-- bootstrap -->
