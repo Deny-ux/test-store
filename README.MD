@@ -7,12 +7,13 @@ Routes
 | /api/products      | -            | returns array       | -            | get    |
 | /api/products      | -            | returns msg, object | -            | post   |
 | /api/products/:id  | -            | returns object, msg |              | get    |
+| /profile           | +            | -                   | +            | get    |
 
 /api/products - post - creates new product (requires req.body)
 
-/api/login - needs username, password
+/api/auth/login - needs email, password
 
-/api/register - needs firstName, lastName, email, address, password
+/api/auth/register - needs name, surname, email, address, password
 
 /api/products - can contain req.query (?)
 

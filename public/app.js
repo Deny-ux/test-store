@@ -29,8 +29,11 @@ const displayProducts = (products) => {
 
 productForm.addEventListener("submit", async function (e) {
   e.preventDefault();
+  if (nameInput.value === "") {
+    alert("please provide name");
+    return;
+  }
   console.log("submit form");
-
   const resp = await axios.post("/api/products", {
     name: nameInput.value,
     description: desciption.value,
@@ -42,5 +45,5 @@ productForm.addEventListener("submit", async function (e) {
   console.log(typeof priceInput.value);
   console.log(category.value);
 
-  // document.location.reload();
+  document.location.reload();
 });

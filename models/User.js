@@ -11,8 +11,16 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, "please provide surname"],
+    required: [true, "please provide email"],
     unique: [true, "this email is already used!"],
+    match: [
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Please provide a valid email",
+    ],
+  },
+  password: {
+    type: String,
+    required: [true, "please provide password"],
   },
   img: {
     type: String,
@@ -21,6 +29,10 @@ const userSchema = mongoose.Schema({
     type: Number,
     min: [0, "Balance cannot be negative value!"],
     default: 0,
+  },
+  address: {
+    type: String,
+    required: [true, "please provide address"],
   },
 });
 

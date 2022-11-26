@@ -39,3 +39,17 @@ select {
 label {
   margin: 0.74rem;
 }
+
+.alert-danger {
+  color: hsl(0, 95%, 54%);
+  font-size: 20px;
+  /* background: hsl(0, 26%, 61%); */
+  padding: 0.5rem;
+  text-transform: capitalize;
+}
+.product-form {
+  margin-bottom: 10rem;
+  background: hsla(0, 6%, 75%, 0.425);
+  padding: 2rem;
+  border-radius: 20px;
+}
