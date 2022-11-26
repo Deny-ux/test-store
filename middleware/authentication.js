@@ -3,14 +3,14 @@ const { createJWT, isTokenValid } = require("../utils/jwt");
 const { StatusCodes } = require("http-status-codes");
 const auth = async (req, res, next) => {
   // check header
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    console.log(11111);
+  const token = req.headers.authorization;
+  // if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!token) {
     return res
       .status(StatusCodes.UNAUTHORIZED)
       .json({ msg: "no token provided" });
   }
-  const token = authHeader.split(" ")[1];
+  // const token = authHeader.split(" ")[1];
 
   try {
     const payload = isTokenValid(token);

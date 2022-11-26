@@ -12,21 +12,28 @@ const port = process.env.PORT || 3000;
 // routes
 const productRouter = require("./routes/productRoutes");
 const authRouter = require("./routes/authRoutes");
+const profileRouter = require("./routes/profileRoutes");
 // const profileRouter = require("./routes/");
 
 //middleware
-// app.use(express.static(__dirname + "/public"));
-app.use(express.static("./public"));
+app.use(express.static(__dirname + "/public"));
+// app.use(express.static("./public"));
 app.use(express.json());
 app.use("/api/products", productRouter);
 app.use("/api/auth", authRouter);
-app.use("/profile", authenticateUser, (req, res) => {
-  res.sendFile(__dirname + "/public/profile.html");
-});
+// app.use("/profile", authenticateUser, (req, res) => {
+//   res.sendFile(__dirname + "/public/profile.html");
+// });
+app.use("/profile", authenticateUser, profileRouter);
+// app.use("/aa", (req, res) => {
+//   res.status(200).sendFile(__dirname + "/public/profile.html");
+// });
+
 // not found
 app.use((req, res) => {
   return res.status(404).sendFile(__dirname + "/public/notExist.html");
 });
+
 app.use(errorHandlerMiddleware);
 // end of middleware
 
