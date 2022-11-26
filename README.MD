@@ -7,7 +7,7 @@ Routes
 | /api/products      | -            | returns array       | -            | get    |
 | /api/products      | -            | returns msg, object | -            | post   |
 | /api/products/:id  | -            | returns object, msg |              | get    |
-| /profile           | +            | -                   | +            | get    |
+| /profile           | +            | +                   | -            | get    |
 
 /api/products - post - creates new product (requires req.body)
 
