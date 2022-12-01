@@ -40,6 +40,12 @@ const createProduct = async (req, res) => {
   const productImageUrl = productImage.secure_url;
   const reqObject = req.body;
   reqObject.img = productImageUrl;
+  reqObject.createdBy = req.user.userID;
+  console.log("----------------");
+  console.log(reqObject);
+  console.log(req.user);
+  console.log("----------------");
+
   const product = await Product.create(req.body);
   res.status(200).json({ msg: "OK", product });
 };

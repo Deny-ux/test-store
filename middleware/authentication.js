@@ -14,10 +14,11 @@ const auth = async (req, res, next) => {
 
   try {
     const payload = isTokenValid(token);
+    console.log("payload:");
     console.log(payload);
     // attach the user to the job routes
     req.user = {
-      userId: payload.userId,
+      userID: payload.userID,
       name: payload.name,
       email: payload.email,
       surname: payload.surname,
