@@ -1,5 +1,12 @@
 const { StatusCodes } = require("http-status-codes");
 const Product = require("../models/Product");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+const fs = require("fs");
 
 const getAllProducts = async (req, res) => {
   let products = await Product.find({});
@@ -22,7 +29,17 @@ const createProduct = async (req, res) => {
   if (typeof req.body?.price === "string") {
     req.body.price = Number(req.body.price);
   }
-  console.log(req.body);
+  const productImage = await cloudinary.uploader.upload(
+    req.files.productImage.tempFilePath,
+    {
+      original_filename: req.files.productImage.name,
+      folder: "cool shop",
+    }
+  );
+  fs.unlinkSync(req.files.productImage.tempFilePath);
+  const productImageUrl = productImage.secure_url;
+  const reqObject = req.body;
+  reqObject.img = productImageUrl;
   const product = await Product.create(req.body);
   res.status(200).json({ msg: "OK", product });
 };

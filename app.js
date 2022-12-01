@@ -4,11 +4,16 @@ const connectDB = require("./utils/connectDB");
 const notFoundMiddleware = require("./middleware/notFound");
 const errorHandlerMiddleware = require("./middleware/errorHandler");
 const authenticateUser = require("./middleware/authentication");
-
-const app = express();
+const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 require("dotenv").config();
 require("express-async-errors");
-const port = process.env.PORT || 3000;
+const app = express();
 // routes
 const productRouter = require("./routes/productRoutes");
 const authRouter = require("./routes/authRoutes");
@@ -16,8 +21,8 @@ const profileRouter = require("./routes/profileRoutes");
 // const profileRouter = require("./routes/");
 
 //middleware
+app.use(fileUpload({ useTempFiles: true }));
 app.use(express.static(__dirname + "/public"));
-// app.use(express.static("./public"));
 app.use(express.json());
 app.use("/api/products", productRouter);
 app.use("/api/auth", authRouter);
@@ -25,19 +30,14 @@ app.use("/api/auth", authRouter);
 //   res.sendFile(__dirname + "/public/profile.html");
 // });
 app.use("/profile", authenticateUser, profileRouter);
-// app.use("/aa", (req, res) => {
-//   res.status(200).sendFile(__dirname + "/public/profile.html");
-// });
 
 // not found
-app.use((req, res) => {
-  return res.status(404).sendFile(__dirname + "/public/notExist.html");
-});
-
+app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 // end of middleware
 
 // start server
+const port = process.env.PORT || 3000;
 app.listen(port, async () => {
   try {
     await connectDB(process.env.MONGO_URI);

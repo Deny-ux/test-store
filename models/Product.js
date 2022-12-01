@@ -1,7 +1,7 @@
 // TODO
-// enum for categories ???
-//
+// ADD NotfoundUserError
 const mongoose = require("mongoose");
+const User = require("../models/User");
 const productSchema = mongoose.Schema({
   name: {
     type: String,
@@ -14,6 +14,7 @@ const productSchema = mongoose.Schema({
   },
   img: {
     type: String,
+    required: [true, "Please provide URL to find image"],
   },
   price: {
     type: Number,
@@ -37,6 +38,19 @@ const productSchema = mongoose.Schema({
       message: "{VALUE} category is not supported",
     },
   },
+  createdBy: {
+    type: mongoose.Schema.ObjectId,
+    required: [true, "Product should has an owner!"],
+    ref: "User",
+  },
 });
+productSchema.pre("save", async function () {
+  console.log(`From pre save ${this.createdBy}`);
 
+  const ownerUser = await User.findById(this.createdBy);
+  // TODO: NEW ERROR
+  if (!ownerUser) {
+    throw new Error("User with provided ID was not found");
+  }
+});
 module.exports = mongoose.model("Product", productSchema);
