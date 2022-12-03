@@ -11,16 +11,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   let products = await axios.get("/api/products?");
   products = products.data.products;
   displayProducts(products);
-  const resp = await axios.post("/api/auth/login", {
-    email: "not-denys@gmail.com",
-    password: "3234234",
-  });
-  // const token = resp.data.token;
-  // console.log(token);
-  // localStorage.setItem("token", token);
-
-  const token = localStorage.getItem("token");
-  console.log(token);
 });
 
 const displayProducts = (products) => {
@@ -42,12 +32,15 @@ productForm.addEventListener("submit", async function (e) {
     alert("please provide name");
     return;
   }
-  const resp = await axios.post("/api/products", {
-    name: nameInput.value,
-    description: desciption.value,
-    price: Number(priceInput.value),
-    category: category.value,
-  });
+  const formData = new FormData(productForm);
 
-  document.location.reload();
+  console.log(formData);
+  // const resp = await axios.post("/api/products", {
+  //   name: nameInput.value,
+  //   description: desciption.value,
+  //   price: Number(priceInput.value),
+  //   category: category.value,
+  // });
+
+  // document.location.reload();
 });
