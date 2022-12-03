@@ -1,4 +1,4 @@
-main {
+Rmain {
   min-width: 90vw;
   max-width: 1170px;
   margin: 0 auto;
@@ -52,4 +52,8 @@ label {
   background: hsla(0, 6%, 75%, 0.425);
   padding: 2rem;
   border-radius: 20px;
+  max-width: 800px;
+}
+img {
+  width: 100px;
 }

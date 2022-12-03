@@ -12,7 +12,40 @@ cloudinary.config({
 const fs = require("fs");
 
 const getAllProducts = async (req, res) => {
-  let products = await Product.find({});
+  const { name, category, numericFilters, sort } = req.query;
+  console.log(req.query);
+  if (name) {
+    req.query.name = { $regex: name, $options: "i" };
+  }
+  if (numericFilters) {
+    const operatorMap = {
+      ">": "$gt",
+      ">=": "$gte",
+      "=": "$eq",
+      "<": "$lt",
+      "<=": "$lte",
+    };
+    const regEx = /\b(<|>|>=|=|<|<=)\b/g;
+    let filters = numericFilters.replace(
+      regEx,
+      (match) => `-${operatorMap[match]}-`
+    );
+    console.log(`numericFilters: ${numericFilters}`);
+    console.log(`filters: ${filters}`);
+    filters = filters.split("-");
+    const [price, operator, value] = filters;
+    console.log(filters);
+    if (price == "price") {
+      req.query.price = { [operator]: Number(value) };
+    }
+  }
+  let sortList;
+  if (sort) {
+    sortList = sort.split(",").join(" ");
+  } else {
+    sortList = "createdAt";
+  }
+  let products = await Product.find(req.query).sort(sortList);
   res.status(200).json({ msg: "OK", nbHits: products.length, products });
 };
 

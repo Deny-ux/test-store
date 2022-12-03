@@ -16,10 +16,12 @@ window.addEventListener("DOMContentLoaded", async () => {
 const displayProducts = (products) => {
   const productsDOM = products
     .map((product) => {
-      return `<article class="product">
+      return `<article data-id=${product._id}  class="product">
     <h2>${product.name}</h2>
     <p>${product.price}</p>
     <p>${product.category}</p>
+    <img src=${product.img} alt="product image">
+
         </article>`;
     })
     .join("");
@@ -33,14 +35,13 @@ productForm.addEventListener("submit", async function (e) {
     return;
   }
   const formData = new FormData(productForm);
+  const headers = {
+    Authorization:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRGVueXMiLCJzdXJuYW1lIjoiRm9rYSIsImVtYWlsIjoibm90LWRlbnlzQGdtYWlsLmNvbSIsInVzZXJJRCI6IjYzOGI3NzIzOGEwZTIzYTk3ODkzMzUwMyIsImlhdCI6MTY3MDA4NDM4NywiZXhwIjoxNjcyNjc2Mzg3fQ.enjrchUDYm4BARZf4axy8fWDhZAkNBmufl544VlxeAM",
+    // "Content-Type": "multipart/form-data",
+  };
+  const resp = await axios.post("/api/products", formData, { headers });
 
-  console.log(formData);
-  // const resp = await axios.post("/api/products", {
-  //   name: nameInput.value,
-  //   description: desciption.value,
-  //   price: Number(priceInput.value),
-  //   category: category.value,
-  // });
-
-  // document.location.reload();
+  console.log(resp.data);
+  document.location.reload();
 });
