@@ -34,12 +34,20 @@ productForm.addEventListener("submit", async function (e) {
     alert("please provide name");
     return;
   }
-  const resp = await axios.post("/api/products", {
-    name: nameInput.value,
-    description: desciption.value,
-    price: Number(priceInput.value),
-    category: category.value,
-  });
+  const headers = {
+    authorization:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiRGVueXMiLCJzdXJuYW1lIjoiRm9rYSIsImVtYWlsIjoibm90LWRlbnlzQGdtYWlsLmNvbSIsInVzZXJJRCI6IjYzODE1MGY3ZTJjNjJlYmU3M2I2Y2JjYSIsImlhdCI6MTY2OTQxOTMzNywiZXhwIjoxNjcyMDExMzM3fQ.-XaPxtRo7N-moASD_DJc9X-xccmLdqALmwg5paxSFFE",
+  };
+  const resp = await axios.post(
+    "/api/products",
+    {
+      name: nameInput.value,
+      description: desciption.value,
+      price: Number(priceInput.value),
+      category: category.value,
+    },
+    { headers }
+  );
 
   document.location.reload();
 });

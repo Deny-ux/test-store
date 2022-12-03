@@ -9,10 +9,18 @@ const desciption = document.querySelector("#description");
 // after loading page
 window.addEventListener("DOMContentLoaded", async () => {
   let products = await axios.get("/api/products?");
-  console.log(products);
   products = products.data.products;
   displayProducts(products);
-  console.log(products);
+  const resp = await axios.post("/api/auth/login", {
+    email: "not-denys@gmail.com",
+    password: "3234234",
+  });
+  // const token = resp.data.token;
+  // console.log(token);
+  // localStorage.setItem("token", token);
+
+  const token = localStorage.getItem("token");
+  console.log(token);
 });
 
 const displayProducts = (products) => {

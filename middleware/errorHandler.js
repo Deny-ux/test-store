@@ -1,4 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
+const { GeneralAPIError } = require("../errors");
 const errorHandlerMiddleware = (err, req, res, next) => {
   console.log(err);
   if (err.name == "ValidationError") {
@@ -10,9 +11,13 @@ const errorHandlerMiddleware = (err, req, res, next) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ msg: "user with this email already exists!" });
   }
+  if (err instanceof GeneralAPIError) {
+    return res.status(err.statusCode).json({ msg: err.message });
+  }
+
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
-    .json({ msg: "Error", err });
+    .json({ msg: err.message });
 };
 
 module.exports = errorHandlerMiddleware;

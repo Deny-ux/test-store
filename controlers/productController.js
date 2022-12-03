@@ -1,5 +1,8 @@
+// TODO
+// 1. specific errors for file
 const { StatusCodes } = require("http-status-codes");
 const Product = require("../models/Product");
+const { BadFileError } = require("../errors");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -29,24 +32,30 @@ const createProduct = async (req, res) => {
   if (typeof req.body?.price === "string") {
     req.body.price = Number(req.body.price);
   }
+  const productImageFile = req.files.productImage;
+  if (!productImageFile.mimetype.startsWith("image")) {
+    throw new BadFileError("Please Upload Image!");
+  }
+  const maxSize = 20 * 1024 * 1024;
+  if (productImageFile.size > maxSize) {
+    throw new BadFileError(
+      `Uploaded image size cannot exceed ${Number(maxSize / 1024 / 1024)}MB!`
+    );
+  }
   const productImage = await cloudinary.uploader.upload(
-    req.files.productImage.tempFilePath,
+    productImageFile.tempFilePath,
     {
-      original_filename: req.files.productImage.name,
+      original_filename: productImageFile.name,
       folder: "cool shop",
     }
   );
-  fs.unlinkSync(req.files.productImage.tempFilePath);
+  fs.unlinkSync(productImageFile.tempFilePath);
   const productImageUrl = productImage.secure_url;
   const reqObject = req.body;
   reqObject.img = productImageUrl;
   reqObject.createdBy = req.user.userID;
-  console.log("----------------");
-  console.log(reqObject);
-  console.log(req.user);
-  console.log("----------------");
 
-  const product = await Product.create(req.body);
+  const product = await Product.create(reqObject);
   res.status(200).json({ msg: "OK", product });
 };
 

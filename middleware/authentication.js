@@ -1,35 +1,31 @@
+//TODO
+// 1. DIFFERENT types of errors w zależności od tego czy
+// token jest, czy on nie działa, czy on nieaktualnyitp
+
 const User = require("../models/User");
 const { createJWT, isTokenValid } = require("../utils/jwt");
 const { StatusCodes } = require("http-status-codes");
+const { UnAuthenticatedError } = require("../errors");
 const auth = async (req, res, next) => {
   // check header
   const token = req.headers.authorization;
-  // if (!authHeader || !authHeader.startsWith("Bearer ")) {
   if (!token) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ msg: "no token provided" });
+    throw new UnAuthenticatedError("No token provided!");
   }
-  // const token = authHeader.split(" ")[1];
 
-  try {
-    const payload = isTokenValid(token);
-    console.log("payload:");
-    console.log(payload);
-    // attach the user to the job routes
-    req.user = {
-      userID: payload.userID,
-      name: payload.name,
-      email: payload.email,
-      surname: payload.surname,
-    };
-    next();
-  } catch (error) {
-    // throw new Error("Authentication invalid");
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ msg: "no token provided" });
+  const payload = isTokenValid(token);
+  console.log("payload:");
+  console.log(payload);
+  if (!payload) {
+    throw new UnAuthenticatedError("No token provided!");
   }
+  req.user = {
+    userID: payload.userID,
+    name: payload.name,
+    email: payload.email,
+    surname: payload.surname,
+  };
+  next();
 };
 
 module.exports = auth;

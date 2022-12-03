@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
+// TODO:
+// bcrypt implementation
 
+const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
   name: {
     type: String,
